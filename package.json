@@ -12,5 +12,24 @@
     "ajv": "^5.5.2",
     "ajv-keywords": "^2.1.1",
     "isobject": "^3.0.1"
-  }
+  },
+  "directories": {
+    "example": "example"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magnuslim/semantic-schema.git"
+  },
+  "keywords": [
+    "json-schema",
+    "json",
+    "schema",
+    "object",
+    "semantic"
+  ],
+  "bugs": {
+    "url": "https://github.com/magnuslim/semantic-schema/issues"
+  },
+  "homepage": "https://github.com/magnuslim/semantic-schema#readme"
 }

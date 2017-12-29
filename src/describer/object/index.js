@@ -1,5 +1,6 @@
 const BaseDescriber = require('../base');
 const State = require('../../lib/state');
+const Switch = require('../../feature/switch');
 const assert = require('assert');
 
 module.exports = class extends BaseDescriber {
@@ -7,9 +8,9 @@ module.exports = class extends BaseDescriber {
         super();
         this._schema.type = 'object';
         this._schema.additionalProperties = false;
-        this._schemaStack = [];
-        this._functionStack = [];
+        this._requiredAll = false;
         this._state = new State();
+        this._switch = new Switch(this._state);
     }
     maxProperties(num) {
         this._schema.maxProperties = num;
@@ -23,6 +24,9 @@ module.exports = class extends BaseDescriber {
         if(this._schema.required === undefined) this._schema.required = []; 
         this._schema.required = this._schema.required.concat(propertyNameArr);
         return this;
+    }
+    requiredAll() {
+        this._requiredAll = true;
     }
     properties(properties) {
         this._schema.properties = {};
@@ -54,39 +58,36 @@ module.exports = class extends BaseDescriber {
         return this;
     }
 
+    normalize() {
+        if(this._requiredAll) {
+            if(this._schema.properties) this._schema.required = Object.keys(this._schema.properties);
+        }
+        return super.normalize();
+    }
+
     get if() {
-        assert(this._state.lastKeyword === undefined, 'unexpected keyword if');
-        this._schema = this._state.push(State.Keyword.IF, this._schema);
-        return this;
+        this._schema = this._switch.if(this._schema);
+        return this; // so user can still use keywords of ObjectDescriber.
     }
 
     get then() {
-        assert(this._state.lastKeyword === State.Keyword.IF, 'unexpected keyword `then`');
-        this._schema = this._state.pop(this._schema);
-        this._schema = this._state.push(State.Keyword.THEN, this._schema);
+        this._schema = this._switch.then(this._schema);
         return this;
     }
 
     get elseIf() {
-        assert(this._state.lastKeyword === State.Keyword.THEN, 'unexpected keyword `elseIf`');
-        this._schema = this._state.pop(this._schema);
-        assert(this._state.lastKeyword === undefined, 'unexpected keyword if');
-        this._schema = this._state.push(State.Keyword.IF, this._schema);
+        this._schema = this._switch.elseIf(this._schema);
         return this;
     }
 
     get else() {
-        assert(this._state.lastKeyword === State.Keyword.THEN, 'unexpected keyword `elseIf`');
-        this._schema = this._state.pop(this._schema);
-        this._schema = this._state.push(State.Keyword.ELSE, this._schema);
+        this._schema = this._switch.else(this._schema);
         return this;
     }
 
     get endIf() {
-        assert(this._state.lastKeyword === State.Keyword.THEN || this._state.lastKeyword === State.Keyword.ELSE, 'unexpected keyword `endIf`');
-        this._schema = this._state.pop(this._schema);
+        this._schema = this._switch.endIf(this._schema);
         return this;
     }
-
     // ignored: dependencies, propertyNames, patternGroups (deprecated), patternRequired (proposed)
 };

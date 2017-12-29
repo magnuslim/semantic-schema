@@ -13,7 +13,8 @@ let schema = array(
     e: number(),
     f: boolean(),
     g: NULL()
-  }).if.properties({type: 1}).then.required('a')
+  })
+    .if.properties({type: 1}).then.required('a')
     .elseIf.properties({type: 2}).then.required('b')
     .else.required('c')
     .endIf
@@ -44,3 +45,5 @@ console.log(result); // true
 
 // if you want to use the schema file directly, just normalize it.
 let jsonSchemaObj = schema.normalize();
+
+console.log(JSON.stringify(jsonSchemaObj, null, 4));

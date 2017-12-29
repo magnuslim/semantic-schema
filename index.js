@@ -13,7 +13,7 @@ module.exports = {
         integer: (min, max) => new IntegerDescriber().min(min).max(max), 
         number: (min, max) => new NumberDescriber().min(min).max(max), 
         boolean: () => new BooleanDescriber(), 
-        NULL: () => new NullDescriber(), 
+        NULL: () => new NullDescriber(),
     },
     validator: require('./src/validator')
 }

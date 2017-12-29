@@ -10,7 +10,7 @@ This project is uncompleted. But all functionality mentioned below is reliable.
 
 ```js
 const {object, string, integer, number, array, boolean, NULL} = require('semantic-schema').describer;
-const validator = require('../index').validator;
+const validator = require('semantic-schema').validator;
 
 let schema = array(
   object({
@@ -19,7 +19,7 @@ let schema = array(
     b: 9, // integer().enum(9)
     c: {
       c1: [false, true] // boolean() or boolean().enum(ture, false)
-    }, // object().properties({c1: ...}).required('c1');
+    }, // object().properties({c1: ...}).requiredAll();
     d: integer(),
     e: number(),
     f: boolean(),
@@ -30,7 +30,7 @@ let schema = array(
     .endIf
 );
 
-// validator is implement using ajv.
+// validator is implemented with ajv.
 let result = validator.validate(schema, [{
   type: 1,
   a: 'hello'

@@ -27,6 +27,7 @@ module.exports = class extends BaseDescriber {
     }
     requiredAll() {
         this._requiredAll = true;
+        return this;
     }
     properties(properties) {
         this._schema.properties = {};

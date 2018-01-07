@@ -15,5 +15,6 @@ module.exports = {
         boolean: () => new BooleanDescriber(), 
         NULL: () => new NullDescriber(),
     },
+    syntacticSugar: require('./src/syntactic_sugar'),
     validator: require('./src/validator')
 }

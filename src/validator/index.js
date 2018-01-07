@@ -12,7 +12,7 @@ module.exports = {
     errors() {
         return ajv.errors;
     },
-    errorText(errors, options) {
+    errorsText(errors, options) {
         return ajv.errorsText(errors, options);
     }
 }

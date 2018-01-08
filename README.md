@@ -10,28 +10,27 @@ This project is uncompleted. But all functionality mentioned below is reliable.
 
 ```js
 const {object, string, integer, number, array, boolean, NULL} = require('semantic-schema').describer;
-const validator = require('semantic-schema').validator;
+const Validator = require('semantic-schema').validator;
 
-let schema = array(
-  object({
-    type: [1, 2, 3, 4], // integer().enum(1, 2, 3, 4)
-    a: /hello/, // string().pattern(/hello/)
-    b: 9, // integer().enum(9)
-    c: {
-      c1: [false, true] // boolean() or boolean().enum(ture, false)
-    }, // object().properties({c1: ...}).requiredAll();
-    d: integer(),
-    e: number(),
-    f: boolean(),
-    g: NULL()
-  }).if.properties({type: 1}).then.required('a')
+let schema = array().item(
+  object().properties({
+    type: integer().enum(1, 2, 3, 4), // [1, 2, 3, 4]
+    a: string().pattern(/hello/), // /hello/
+    b: integer().enum(9), // 9 or [9]
+    c: boolean(),
+    d: NULL(),
+    e: object().properties({
+      e1: boolean()
+    }).requiredAll(),
+  })
+    .if.properties({type: 1}).then.required('a')
     .elseIf.properties({type: 2}).then.required('b')
     .else.required('c')
     .endIf
 );
 
-// validator is implemented with ajv.
-let result = validator.validate(schema, [{
+let validator = new Validator(schema);
+let result = validator.validate([{
   type: 1,
   a: 'hello'
 }, {
@@ -39,22 +38,21 @@ let result = validator.validate(schema, [{
   b: 9
 }, {
   type: 3,
-  c: {
-    c1: false
-  }
+  c: true
 }, {
   type: 3,
-  c: {
-    c1: true
-  },
-  d: 1,
-  e: 1.1,
-  f: false,
-  g: null
+  a: 'hello',
+  b: 9,
+  c: false,
+  d: null,
+  e: {
+    e1: true
+  }
 }])
 console.log(result); // true
 
-// If you want to use the schema file directly, just normalize it.
-let jsonSchemaObj = schema.normalize();
+// if you want to use the schema file directly, just normalize it.
+let jsonSchemaObj = schema.normalize(); // or let jsonSchemaObj = validator.jsonSchema;
+console.log(JSON.stringify(jsonSchemaObj, null, 2))
 
 ```

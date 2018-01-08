@@ -1,18 +1,16 @@
 const {object, string, integer, number, array, boolean, NULL} = require('../index').describer;
-const validator = require('../index').validator;
+const Validator = require('../index').validator;
 
-let schema = array(
-  object({
-    type: [1, 2, 3, 4], // integer().enum(1, 2, 3, 4)
-    a: /hello/, // string().pattern(/hello/)
-    b: 9, // integer().enum(9)
-    c: {
-      c1: [false, true] // boolean() or boolean().enum(ture, false)
-    }, // object().properties({c1: ...}).required('c1');
-    d: integer(),
-    e: number(),
-    f: boolean(),
-    g: NULL()
+let schema = array().item(
+  object().properties({
+    type: integer().enum(1, 2, 3, 4), // [1, 2, 3, 4]
+    a: string().pattern(/hello/), // /hello/
+    b: integer().enum(9), // 9 or [9]
+    c: boolean(),
+    d: NULL(),
+    e: object().properties({
+      e1: boolean()
+    }).requiredAll(),
   })
     .if.properties({type: 1}).then.required('a')
     .elseIf.properties({type: 2}).then.required('b')
@@ -20,7 +18,8 @@ let schema = array(
     .endIf
 );
 
-let result = validator.validate(schema, [{
+let validator = new Validator(schema);
+let result = validator.validate([{
   type: 1,
   a: 'hello'
 }, {
@@ -28,22 +27,19 @@ let result = validator.validate(schema, [{
   b: 9
 }, {
   type: 3,
-  c: {
-    c1: false
-  }
+  c: true
 }, {
   type: 3,
-  c: {
-    c1: true
-  },
-  d: 1,
-  e: 1.1,
-  f: false,
-  g: null
+  a: 'hello',
+  b: 9,
+  c: false,
+  d: null,
+  e: {
+    e1: true
+  }
 }])
 console.log(result); // true
 
 // if you want to use the schema file directly, just normalize it.
-let jsonSchemaObj = schema.normalize();
-
-console.log(JSON.stringify(jsonSchemaObj, null, 4));
+let jsonSchemaObj = schema.normalize(); // or let jsonSchemaObj = validator.jsonSchema;
+console.log(JSON.stringify(jsonSchemaObj, null, 2))

@@ -1,4 +1,3 @@
-const BaseDescriber = require('../describer/base');
 const ObjectDescriber = require('../describer/object');
 const ArrayDescriber = require('../describer/array');
 const StringDescriber = require('../describer/string');
@@ -7,7 +6,7 @@ const IntegerDescriber = require('../describer/integer');
 const BooleanDescriber = require('../describer/boolean');
 const NullDescriber = require('../describer/null');
 
-const isDescriber = val => val instanceof BaseDescriber;
+const isDescriber = val => typeof val._schema === 'object';
 const isObject  = val => require('isobject')(val) && !(val instanceof RegExp);
 const isArray   = val => Array.isArray(val);
 const isRegExp  = val => val instanceof RegExp;

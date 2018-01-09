@@ -8,6 +8,9 @@ module.exports = class {
         this._schema.description = desc;
         return this;
     }
+    desc(desc) {
+        return this.description(desc);
+    }
     enum(...enumArr) {
         assert(Array.isArray(enumArr), 'expect enum to be an array');
         this._schema.enum = enumArr;

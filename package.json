@@ -1,6 +1,6 @@
 {
   "name": "semantic-schema",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "write json schema in a graceful way.",
   "main": "index.js",
   "scripts": {

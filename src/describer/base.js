@@ -12,12 +12,8 @@ module.exports = class {
         return this.description(desc);
     }
     enum(...enumArr) {
-        assert(Array.isArray(enumArr), 'expect enum to be an array');
         this._schema.enum = enumArr;
         return this;
-    }
-    const() {
-        
     }
     normalize() {
         return this._schema;

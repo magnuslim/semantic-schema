@@ -7,11 +7,33 @@ const BooleanDescriber = require('./src/describer/boolean');
 const NullDescriber = require('./src/describer/null');
 module.exports = {
     describer: {
-        object: (properties) => new ObjectDescriber().properties(properties), 
-        array: (item = undefined) => item ? new ArrayDescriber().item(item) : new ArrayDescriber(), 
-        string: (pattern) => new StringDescriber().pattern(pattern), 
-        integer: (min, max) => new IntegerDescriber().min(min).max(max), 
-        number: (min, max) => new NumberDescriber().min(min).max(max), 
+        object: (properties) => {
+            let describer = new ObjectDescriber();
+            if (properties) describer.properties(properties);
+            return describer;
+        }, 
+        array: (item) => {
+            let describer = new ArrayDescriber();
+            if (item) describer.item(item);
+            return describer;
+        }, 
+        string: (pattern) => {
+            let describer = new StringDescriber();
+            if (pattern) describer.pattern(pattern);
+            return describer;
+        }, 
+        integer: (min, max) => {
+            let describer = new IntegerDescriber();
+            if(min) describer.min(min);
+            if(max) describer.max(max);
+            return describer;
+        }, 
+        number: (min, max) => {
+            let describer = new NumberDescriber();
+            if(min) describer.min(min);
+            if(max) describer.max(max);
+            return describer;
+        }, 
         boolean: () => new BooleanDescriber(), 
         NULL: () => new NullDescriber(),
     },

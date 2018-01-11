@@ -1,7 +1,7 @@
 const assert = require('assert');
 const isObject = require('isobject');
 
-const BaseDescriber = require('./base');
+const BaseDescriber = require('../base');
 
 module.exports = class extends BaseDescriber {
     constructor() {

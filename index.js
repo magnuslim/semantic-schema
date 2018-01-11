@@ -1,3 +1,4 @@
+const BaseDescriber = require('./src/describer/base'); // vscode's type hinting with fail without this line...
 const ObjectDescriber = require('./src/describer/object');
 const ArrayDescriber = require('./src/describer/array');
 const StringDescriber = require('./src/describer/string');

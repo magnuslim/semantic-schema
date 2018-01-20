@@ -6,6 +6,8 @@ const NumberDescriber = require('./src/describer/number');
 const IntegerDescriber = require('./src/describer/integer');
 const BooleanDescriber = require('./src/describer/boolean');
 const NullDescriber = require('./src/describer/null');
+const syntacticSugar = require('./src/syntactic_sugar');
+
 module.exports = {
     describer: {
         object: (properties) => {
@@ -37,6 +39,11 @@ module.exports = {
         }, 
         boolean: () => new BooleanDescriber(), 
         NULL: () => new NullDescriber(),
+        empty: () => new NullDescriber()
     },
-    validator: require('./src/validator')
+    validator: require('./src/validator'),
+    normalize: (describer) => {
+        describer = syntacticSugar.parseDescriber(describer);
+        return describer.normalize();
+    }
 }

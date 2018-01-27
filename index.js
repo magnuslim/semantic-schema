@@ -1,12 +1,13 @@
-const BaseDescriber = require('./src/describer/base'); // vscode's type hinting with fail without this line...
-const ObjectDescriber = require('./src/describer/object');
-const ArrayDescriber = require('./src/describer/array');
-const StringDescriber = require('./src/describer/string');
-const NumberDescriber = require('./src/describer/number');
+const BaseDescriber    = require('./src/describer/base'); // vscode's type hinting with fail without this line...
+const ObjectDescriber  = require('./src/describer/object');
+const ArrayDescriber   = require('./src/describer/array');
+const StringDescriber  = require('./src/describer/string');
+const NumberDescriber  = require('./src/describer/number');
 const IntegerDescriber = require('./src/describer/integer');
 const BooleanDescriber = require('./src/describer/boolean');
-const NullDescriber = require('./src/describer/null');
-const syntacticSugar = require('./src/syntactic_sugar');
+const NullDescriber    = require('./src/describer/null');
+const OneOfDescriber   = require('./src/describer/one_of');
+const syntacticSugar   = require('./src/syntactic_sugar');
 
 module.exports = {
     describer: {
@@ -39,7 +40,8 @@ module.exports = {
         }, 
         boolean: () => new BooleanDescriber(), 
         NULL: () => new NullDescriber(),
-        empty: () => new NullDescriber()
+        empty: () => new NullDescriber(),
+        //oneOf: (...items) => new OneOfDescriber(...items)
     },
     validator: require('./src/validator'),
     normalize: (describer) => {

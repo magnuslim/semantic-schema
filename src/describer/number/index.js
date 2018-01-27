@@ -6,6 +6,10 @@ module.exports = class extends Base {
         super();
         this._schema.type = 'number';
     }
+    enum(...enumArr) {
+        this._schema.enum = enumArr;
+        return this;
+    }
     max(num) {
         this._schema.maximum = num;
         return this;

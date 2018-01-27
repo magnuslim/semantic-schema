@@ -14,10 +14,10 @@ module.exports = class {
         return this._validate(instance);
     }
     errors() {
-        return ajv.errors;
+        return this._validate.errors;
     }
-    errorsText(errors, options) {
-        return ajv.errorsText(errors, options);
+    errorsText(errors) {
+        return ajv.errorsText(errors);
     }
     get jsonSchema() {
         return this._schema;

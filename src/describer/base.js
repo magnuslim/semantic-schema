@@ -8,10 +8,6 @@ module.exports = class {
         this._schema.description = desc;
         return this;
     }
-    enum(...enumArr) {
-        this._schema.enum = enumArr;
-        return this;
-    }
     normalize() {
         return this._schema;
     }

@@ -6,4 +6,8 @@ module.exports = class extends NumberDescriber {
         super();
         this._schema.type = 'integer';
     }
+    enum(...enumArr) {
+        this._schema.enum = enumArr;
+        return this;
+    }
 }

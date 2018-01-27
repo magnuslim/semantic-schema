@@ -6,4 +6,8 @@ module.exports = class extends BaseDescriber {
         super();
         this._schema.type = 'boolean';
     }
+    enum(...enumArr) {
+        this._schema.enum = enumArr;
+        return this;
+    }
 }

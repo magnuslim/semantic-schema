@@ -1,4 +1,4 @@
-const {object, string, integer, number, array, boolean, NULL} = require('../index').describer;
+const {object, string, integer, number, array, boolean, NULL, oneOf} = require('../index').describer;
 const Validator = require('../index').validator;
 
 let schema = array().item(
@@ -42,4 +42,4 @@ console.log(result); // true
 
 // if you want to use the schema file directly, just normalize it.
 let jsonSchemaObj = schema.normalize(); // or let jsonSchemaObj = validator.jsonSchema;
-console.log(JSON.stringify(jsonSchemaObj, null, 2))
+//console.log(JSON.stringify(jsonSchemaObj, null, 2))

@@ -17,7 +17,7 @@ module.exports = class {
         return this._validate.errors;
     }
     errorsText(errors) {
-        return ajv.errorsText(errors);
+        return ajv.errorsText(this.errors());
     }
     get jsonSchema() {
         return this._schema;

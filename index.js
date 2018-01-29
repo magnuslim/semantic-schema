@@ -1,4 +1,4 @@
-const BaseDescriber    = require('./src/describer/base'); // vscode's type hinting with fail without this line...
+const BaseDescriber    = require('./src/describer/base'); // vscode's type hinting will fail without this line...
 const ObjectDescriber  = require('./src/describer/object');
 const ArrayDescriber   = require('./src/describer/array');
 const StringDescriber  = require('./src/describer/string');
@@ -41,7 +41,7 @@ module.exports = {
         boolean: () => new BooleanDescriber(), 
         NULL: () => new NullDescriber(),
         empty: () => new NullDescriber(),
-        //oneOf: (...items) => new OneOfDescriber(...items)
+        oneOf: (...items) => new OneOfDescriber(...items)
     },
     validator: require('./src/validator'),
     normalize: (describer) => {

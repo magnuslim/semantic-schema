@@ -17,6 +17,10 @@ module.exports = class extends BaseDescriber {
         this._schema.minItems = num;
         return this;
     }
+    length(num) {
+        this.maxItems(num).minItems(num);
+        return this;
+    }
     uniqueItems(bool) {
         this._schema.uniqueItems = bool;
         return this;

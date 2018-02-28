@@ -18,6 +18,10 @@ module.exports = class extends Base {
         this._schema.minLength = len;
         return this;
     }
+    length(len) {
+        this.minLength(len).maxLength(len);
+        return this;
+    }
     pattern(regex) {
         if(regex instanceof RegExp) this._schema.pattern = regex.source;
         else this._schema.pattern = regex;

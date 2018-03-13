@@ -2,9 +2,9 @@
 
 > Write Json Schema In a Graceful Way.
 
-Json Schema is really a useful tool for validating the structure of json data. But it is also veeeeeerbose. So here comes the Semantic-schema. It let you write json schema in a semantic way, also, a simplified way, so you can get rid of the verbose grammar. 
+JSON Schema is an excellent tool for validating the structure of JSON data. However, it is also veeeeeerbose. So here comes the Semantic-schema. It let you semantically write JSON Schema so you can get rid of the verbose grammar.
 
-This project is uncompleted. But all functionality mentioned below is reliable.
+This project is uncompleted, but all functionality mentioned below is reliable.
 
 # example
 

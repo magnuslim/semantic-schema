@@ -18,14 +18,12 @@ module.exports = class extends Base {
         this._schema.minimum = num;
         return this;
     }
-    exclusiveMaximum(bool) {
-        assert(this._schema.maximum !== undefined, 'Keyword `exclusiveMaximum` cannot be used without keyword `maximum`');
-        this._schema.exclusiveMaximum = bool;
+    exclusiveMax(num) {
+        this._schema.exclusiveMaximum = num;
         return this;
     }
-    exclusiveMinimum(bool) {
-        assert(this._schema.maximum !== undefined, 'Keyword `exclusiveMinimum` cannot be used without keyword `minimum`');
-        this._schema.exclusiveMinimum = bool;
+    exclusiveMin(num) {
+        this._schema.exclusiveMinimum = num;
         return this;
     }
     multipleOf(num) {

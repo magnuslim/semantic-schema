@@ -17,7 +17,8 @@
     "example": "example"
   },
   "devDependencies": {
-    "ajv-cli": "^3.0.0"
+    "ajv-cli": "^3.0.0",
+    "power-assert": "^1.4.4"
   },
   "repository": {
     "type": "git",

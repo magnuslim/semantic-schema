@@ -6,18 +6,9 @@ module.exports = class extends BaseDescriber {
     constructor() {
         super();
         this._schema.type = 'object';
-        this._schema.additionalProperties = false;
         this._requiredAll = false;
         this._state = new State();
         this._switch = new Switch(this._state);
-    }
-    maxProperties(num) {
-        this._schema.maxProperties = num;
-        return this;
-    }
-    minProperties(num) {
-        this._schema.minProperties = num;
-        return this;
     }
     required(...propertyNameArr) {
         if(this._schema.required === undefined) this._schema.required = []; 
@@ -29,6 +20,9 @@ module.exports = class extends BaseDescriber {
         return this;
     }
     properties(properties) {
+        if(this._state.lastKeyword !== Switch.Keyword.IF && this._state.lastKeyword !== Switch.Keyword.ELSEIF) {
+            this._schema.additionalProperties = false;
+        }
         this._schema.properties = {};
         for(let key in properties) {
             let property = require('../../sugar').resolve(properties[key]);
@@ -37,21 +31,18 @@ module.exports = class extends BaseDescriber {
         return this;
     }
     patternProperties(patternProperties) {
+        if(this._state.lastKeyword !== Switch.Keyword.IF && this._state.lastKeyword !== Switch.Keyword.ELSEIF) {
+            this._schema.additionalProperties = false;
+        }
         this._schema.patternProperties = {};
         for(let key in patternProperties) {
-            let property = require('../../sugar').resolve(properties[key]);
-            this._schema.properties[key] = property.normalize();
+            let property = require('../../sugar').resolve(patternProperties[key]);
+            this._schema.patternProperties[key] = property.normalize();
         }
         return this;
     }
-    additionalProperties(obj) {
-        if(obj === undefined) {
-            this._schema.additionalProperties = true;
-        }
-        else {
-            obj = require('../../sugar').resolve(obj);
-            this._schema.additionalProperties = obj.normalize();
-        }
+    additionalProperties() {
+        this._schema.additionalProperties = true;
         return this;
     }
 
@@ -63,27 +54,37 @@ module.exports = class extends BaseDescriber {
     }
 
     get if() {
-        this._schema = this._switch.if(this._schema);
+        this._schema = this._switch.if(this.normalize());
+        this._requiredAll = false;
+        this._invalid = false;
         return this; // so user can still use keywords of ObjectDescriber.
     }
 
     get then() {
-        this._schema = this._switch.then(this._schema);
+        this._schema = this._switch.then(this.normalize());
+        this._requiredAll = false;
+        this._invalid = false;
         return this;
     }
 
     get elseIf() {
-        this._schema = this._switch.elseIf(this._schema);
+        this._schema = this._switch.elseIf(this.normalize());
+        this._requiredAll = false;
+        this._invalid = false;
         return this;
     }
 
     get else() {
-        this._schema = this._switch.else(this._schema);
+        this._schema = this._switch.else(this.normalize());
+        this._requiredAll = false;
+        this._invalid = false;
         return this;
     }
 
     get endIf() {
-        this._schema = this._switch.endIf(this._schema);
+        this._schema = this._switch.endIf(this.normalize());
+        this._requiredAll = false;
+        this._invalid = false;
         return this;
     }
     // ignored: dependencies, propertyNames, patternGroups (deprecated), patternRequired (proposed)

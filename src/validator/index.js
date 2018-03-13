@@ -2,22 +2,25 @@ const Ajv = require('ajv');
 const ajv = new Ajv();
 require('ajv-keywords')(ajv, 'switch');
 
-const sugar = require('../syntactic_sugar');
-
-module.exports = class {
+module.exports = class Validator {
     constructor(describer) {
-        this._describer = sugar.parseDescriber(describer);
-        this._schema = this._describer.normalize();
+        this._schema = require('../sugar').resolve(describer).normalize();
         this._validate = ajv.compile(this._schema);
     }
+    
+    static from(describer) {
+        return new Validator(describer);
+    }
+
     validate(instance) {
         return this._validate(instance);
     }
+    
     errors() {
         return this._validate.errors;
     }
     errorsText(errors) {
-        return ajv.errorsText(this.errors());
+        return errors ? ajv.errorsText(errors) : ajv.errorsText(this.errors());
     }
     get jsonSchema() {
         return this._schema;

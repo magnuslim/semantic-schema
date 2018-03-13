@@ -1,7 +1,6 @@
 const BaseDescriber = require('../base');
-const State = require('../../lib/state');
-const Switch = require('../../feature/switch');
-const assert = require('assert');
+const State = require('./state');
+const Switch = require('./switch');
 
 module.exports = class extends BaseDescriber {
     constructor() {
@@ -32,8 +31,7 @@ module.exports = class extends BaseDescriber {
     properties(properties) {
         this._schema.properties = {};
         for(let key in properties) {
-            const sugar = require('../../syntactic_sugar');
-            let property = sugar.parseDescriber(properties[key]);
+            let property = require('../../sugar').resolve(properties[key]);
             this._schema.properties[key] = property.normalize();
         }
         return this;
@@ -41,8 +39,7 @@ module.exports = class extends BaseDescriber {
     patternProperties(patternProperties) {
         this._schema.patternProperties = {};
         for(let key in patternProperties) {
-            const sugar = require('../../syntactic_sugar');
-            let property = sugar.parseDescriber(properties[key]);
+            let property = require('../../sugar').resolve(properties[key]);
             this._schema.properties[key] = property.normalize();
         }
         return this;
@@ -52,8 +49,7 @@ module.exports = class extends BaseDescriber {
             this._schema.additionalProperties = true;
         }
         else {
-            const sugar = require('../../syntactic_sugar');
-            obj = sugar.parseDescriber(obj);
+            obj = require('../../sugar').resolve(obj);
             this._schema.additionalProperties = obj.normalize();
         }
         return this;

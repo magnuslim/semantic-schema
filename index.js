@@ -7,7 +7,6 @@ const IntegerDescriber = require('./src/describer/integer');
 const BooleanDescriber = require('./src/describer/boolean');
 const NullDescriber    = require('./src/describer/null');
 const OneOfDescriber   = require('./src/describer/one_of');
-const syntacticSugar   = require('./src/syntactic_sugar');
 
 module.exports = {
     describer: {
@@ -44,8 +43,5 @@ module.exports = {
         oneOf: (...items) => new OneOfDescriber(...items)
     },
     validator: require('./src/validator'),
-    normalize: (describer) => {
-        describer = syntacticSugar.parseDescriber(describer);
-        return describer.normalize();
-    }
+    normalize: describer => require('./src/sugar').resolve(describer).normalize()
 }

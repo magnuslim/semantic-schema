@@ -5,6 +5,7 @@ const NumberDescriber = require('../describer/number');
 const IntegerDescriber = require('../describer/integer');
 const BooleanDescriber = require('../describer/boolean');
 const NullDescriber = require('../describer/null');
+const BaseDescriber = require('../describer/base');
 
 const isDescriber = val => val !== undefined && typeof val._schema === 'object';
 const isObject  = val => require('isobject')(val) && !(val instanceof RegExp);
@@ -17,10 +18,14 @@ const isBoolean = val => typeof val === 'boolean';
 const isNull    = val => val === null;
 
 module.exports = {
-    parseDescriber: (sugar) => {
+    /**
+     * @returns {BaseDescriber}
+     */
+    resolve: (sugar) => {
         if(isDescriber(sugar)) {
             return sugar;
         }
+        // treat array as enum
         else if(isArray(sugar)) {
             sugar = [...new Set(sugar)];
             if(sugar.length === 0) {
@@ -53,12 +58,15 @@ module.exports = {
                 throw new Error(`unrecognized definition: ${sugar}`);
             }
         }
+        // treat object as object describer
         else if(isObject(sugar)) {
             return new ObjectDescriber().properties(sugar).required(...Object.keys(sugar));
         }
+        // treat regexp as string describer
         else if(isRegExp(sugar)) {
             return new StringDescriber().pattern(sugar);
         }
+        // treat other basic types as an certain value. (an enumeration that allow only one value)
         else if(isNull(sugar)) {
             return new NullDescriber();
         }

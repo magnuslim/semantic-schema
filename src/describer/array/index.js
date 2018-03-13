@@ -21,29 +21,27 @@ module.exports = class extends BaseDescriber {
         this.maxItems(num).minItems(num);
         return this;
     }
-    uniqueItems(bool) {
-        this._schema.uniqueItems = bool;
+    uniqueItems() {
+        this._schema.uniqueItems = true;
         return this;
     }
-    item(obj) {
-        const sugar = require('../../syntactic_sugar');
-        obj = sugar.parseDescriber(obj);
-        this._schema.items = obj.normalize();
+    item(itemDescriber) {
+        itemDescriber = require('../../sugar').resolve(itemDescriber);
+        this._schema.items = itemDescriber.normalize();
         return this;
     }
-    additionalItem(obj) {
-        if(obj == undefined) {
+    additionalItem(itemDescriber) {
+        if(itemDescriber == undefined) {
             this._schema.additionalItems = true;
         }else {
-            const sugar = require('../../syntactic_sugar');
-            obj = sugar.parseDescriber(obj);
-            this._schema.additionalItems = obj.normalize();
+            itemDescriber = require('../../sugar').resolve(itemDescriber);
+            this._schema.additionalItems = itemDescriber.normalize();
         }
         return this;
     }
-    contains(item) {
-        const sugar = require('../../syntactic_sugar');
-        item = sugar.parseDescriber(item);
+    contains(itemDescriber) {
+        itemDescriber = require('../../sugar').resolve(itemDescriber);
+        this._schema.contains = itemDescriber.normalize();
         return this;
     }
 };

@@ -1,4 +1,4 @@
-const {object, string, integer, number, array, boolean, NULL, oneOf} = require('../index').describer;
+const {object, string, integer, number, array, boolean, NULL, oneOf} = require('../index').schema;
 const Validator = require('../index').validator;
 
 let schema = array().item(

@@ -1,11 +1,11 @@
-const ObjectDescriber = require('../describer/object');
-const ArrayDescriber = require('../describer/array');
-const StringDescriber = require('../describer/string');
-const NumberDescriber = require('../describer/number');
-const IntegerDescriber = require('../describer/integer');
-const BooleanDescriber = require('../describer/boolean');
-const NullDescriber = require('../describer/null');
-const BaseDescriber = require('../describer/base');
+const ObjectSchema = require('../schema/object');
+const ArraySchema = require('../schema/array');
+const StringSchema = require('../schema/string');
+const NumberSchema = require('../schema/number');
+const IntegerSchema = require('../schema/integer');
+const BooleanSchema = require('../schema/boolean');
+const NullSchema = require('../schema/null');
+const BaseSchema = require('../schema/base');
 
 const isObject    = val => require('isobject')(val) && !(val instanceof RegExp);
 const isArray     = val => Array.isArray(val);
@@ -15,14 +15,14 @@ const isInteger   = val => Number.isInteger(val);
 const isString    = val => typeof val === 'string';
 const isBoolean   = val => typeof val === 'boolean';
 const isNull      = val => val === null;
-const isDescriber = val => isObject(val) && isObject(val._schema);
+const isSchema = val => isObject(val) && isObject(val._schema);
 
 module.exports = {
     /**
-     * @returns {BaseDescriber}
+     * @returns {BaseSchema}
      */
     resolve: (sugar) => {
-        if(isDescriber(sugar)) {
+        if(isSchema(sugar)) {
             return sugar;
         }
         // treat array as enum
@@ -32,23 +32,23 @@ module.exports = {
                 throw new Error(`unrecognized definition: ${sugar}`);
             }
             else if(sugar.every(isInteger)) {
-                return new IntegerDescriber().enum(...sugar);
+                return new IntegerSchema().enum(...sugar);
             }
             else if(sugar.every(i => isInteger(i) || isFloat(i))) {
-                return new NumberDescriber().enum(...sugar);
+                return new NumberSchema().enum(...sugar);
             }
             else if(sugar.every(isString)) {
-                return new StringDescriber().enum(...sugar);
+                return new StringSchema().enum(...sugar);
             }
             else if(sugar.every(isObject)) {
-                return new ObjectDescriber().enum(...sugar);
+                return new ObjectSchema().enum(...sugar);
             }
             else if(sugar.every(isBoolean)) {
                 if(sugar.length === 1) {
-                    return new BooleanDescriber().enum(sugar[0]);
+                    return new BooleanSchema().enum(sugar[0]);
                 }
                 else if(sugar.length === 2) {
-                    return new BooleanDescriber();
+                    return new BooleanSchema();
                 }
                 else {
                     throw new Error(`unrecognized definition: ${sugar}`);
@@ -58,29 +58,29 @@ module.exports = {
                 throw new Error(`unrecognized definition: ${sugar}`);
             }
         }
-        // treat object as object describer
+        // treat object as object schema
         else if(isObject(sugar)) {
-            return new ObjectDescriber().properties(sugar).requiredAll();
+            return new ObjectSchema().properties(sugar).requiredAll();
         }
-        // treat regexp as string describer
+        // treat regexp as string schema
         else if(isRegExp(sugar)) {
-            return new StringDescriber().pattern(sugar);
+            return new StringSchema().pattern(sugar);
         }
         // treat other basic types as an certain value. (an enumeration that allow only one value)
         else if(isNull(sugar)) {
-            return new NullDescriber();
+            return new NullSchema();
         }
         else if(isString(sugar)) {
-            return new StringDescriber().enum(sugar);
+            return new StringSchema().enum(sugar);
         }
         else if(isBoolean(sugar)) {
-            return new BooleanDescriber().enum(sugar);
+            return new BooleanSchema().enum(sugar);
         }
         else if(isFloat(sugar)) {
-            return new NumberDescriber().enum(sugar);
+            return new NumberSchema().enum(sugar);
         }
         else if(isInteger(sugar)) {
-            return new IntegerDescriber().enum(sugar);
+            return new IntegerSchema().enum(sugar);
         }
         else {
             throw new Error(`unrecognized definition: ${sugar}`);

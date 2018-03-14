@@ -1,6 +1,6 @@
 const assert = require('assert');
 const SemanticSchema = require('../../index');
-const {array, string} = SemanticSchema.describer;
+const {array, string} = SemanticSchema.schema;
 const Validator = SemanticSchema.validator;
 
 describe('array', function() {

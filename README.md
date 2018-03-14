@@ -9,7 +9,7 @@ This project is uncompleted, but all functionality mentioned below is reliable.
 # example
 
 ```js
-const {object, string, integer, number, array, boolean, NULL} = require('semantic-schema').describer;
+const {object, string, integer, number, array, boolean, NULL} = require('semantic-schema').schema;
 const Validator = require('semantic-schema').validator;
 
 let schema = array().item(

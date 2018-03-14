@@ -1,2 +1,2 @@
-require('./describer');
+require('./schema');
 require('./sugar');

@@ -1,7 +1,7 @@
-const BaseDescriber = require('../base');
+const BaseSchema = require('../base');
 const assert = require('assert');
 
-module.exports = class extends BaseDescriber {
+module.exports = class extends BaseSchema {
     constructor() {
         super();
         this._schema.type = 'null';

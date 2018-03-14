@@ -1,8 +1,8 @@
-const BaseDescriber = require('../base');
+const BaseSchema = require('../base');
 const State = require('./state');
 const Switch = require('./switch');
 
-module.exports = class extends BaseDescriber {
+module.exports = class extends BaseSchema {
     constructor() {
         super();
         this._schema.type = 'object';
@@ -57,7 +57,7 @@ module.exports = class extends BaseDescriber {
         this._schema = this._switch.if(this.normalize());
         this._requiredAll = false;
         this._invalid = false;
-        return this; // so user can still use keywords of ObjectDescriber.
+        return this; // so user can still use keywords of ObjectSchema.
     }
 
     get then() {

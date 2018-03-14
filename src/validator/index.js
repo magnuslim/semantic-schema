@@ -3,13 +3,13 @@ const ajv = new Ajv();
 require('ajv-keywords')(ajv, 'switch');
 
 module.exports = class Validator {
-    constructor(describer) {
-        this._schema = require('../sugar').resolve(describer).normalize();
+    constructor(schema) {
+        this._schema = require('../sugar').resolve(schema).normalize();
         this._validate = ajv.compile(this._schema);
     }
     
-    static from(describer) {
-        return new Validator(describer);
+    static from(schema) {
+        return new Validator(schema);
     }
 
     validate(instance) {

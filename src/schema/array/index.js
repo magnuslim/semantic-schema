@@ -1,9 +1,9 @@
 const assert = require('assert');
 const isObject = require('isobject');
 
-const BaseDescriber = require('../base');
+const BaseSchema = require('../base');
 
-module.exports = class extends BaseDescriber {
+module.exports = class extends BaseSchema {
     constructor() {
         super();
         this._schema.type = 'array';
@@ -25,14 +25,14 @@ module.exports = class extends BaseDescriber {
         this._schema.uniqueItems = true;
         return this;
     }
-    item(describer) {
-        describer = require('../../sugar').resolve(describer);
-        this._schema.items = describer.normalize();
+    item(schema) {
+        schema = require('../../sugar').resolve(schema);
+        this._schema.items = schema.normalize();
         return this;
     }
-    contains(describer) {
-        describer = require('../../sugar').resolve(describer);
-        this._schema.contains = describer.normalize();
+    contains(schema) {
+        schema = require('../../sugar').resolve(schema);
+        this._schema.contains = schema.normalize();
         return this;
     }
 };

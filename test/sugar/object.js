@@ -1,4 +1,4 @@
-const {integer} = require('../../index').describer;
+const {integer} = require('../../index').schema;
 const Validator = require('../../index').validator;
 const assert = require('assert');
 

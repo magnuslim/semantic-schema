@@ -1,6 +1,6 @@
 const assert = require('assert');
 const SemanticSchema = require('../../index');
-const {integer} = SemanticSchema.describer;
+const {integer} = SemanticSchema.schema;
 const Validator = SemanticSchema.validator;
 
 describe('integer', function() {

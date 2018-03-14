@@ -25,23 +25,14 @@ module.exports = class extends BaseDescriber {
         this._schema.uniqueItems = true;
         return this;
     }
-    item(itemDescriber) {
-        itemDescriber = require('../../sugar').resolve(itemDescriber);
-        this._schema.items = itemDescriber.normalize();
+    item(describer) {
+        describer = require('../../sugar').resolve(describer);
+        this._schema.items = describer.normalize();
         return this;
     }
-    additionalItem(itemDescriber) {
-        if(itemDescriber == undefined) {
-            this._schema.additionalItems = true;
-        }else {
-            itemDescriber = require('../../sugar').resolve(itemDescriber);
-            this._schema.additionalItems = itemDescriber.normalize();
-        }
-        return this;
-    }
-    contains(itemDescriber) {
-        itemDescriber = require('../../sugar').resolve(itemDescriber);
-        this._schema.contains = itemDescriber.normalize();
+    contains(describer) {
+        describer = require('../../sugar').resolve(describer);
+        this._schema.contains = describer.normalize();
         return this;
     }
 };

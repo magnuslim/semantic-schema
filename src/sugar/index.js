@@ -7,15 +7,15 @@ const BooleanDescriber = require('../describer/boolean');
 const NullDescriber = require('../describer/null');
 const BaseDescriber = require('../describer/base');
 
-const isDescriber = val => val !== undefined && typeof val._schema === 'object';
-const isObject  = val => require('isobject')(val) && !(val instanceof RegExp);
-const isArray   = val => Array.isArray(val);
-const isRegExp  = val => val instanceof RegExp;
-const isFloat   = val => typeof val === 'number' && !Number.isInteger(val);
-const isInteger = val => Number.isInteger(val);
-const isString  = val => typeof val === 'string';
-const isBoolean = val => typeof val === 'boolean';
-const isNull    = val => val === null;
+const isObject    = val => require('isobject')(val) && !(val instanceof RegExp);
+const isArray     = val => Array.isArray(val);
+const isRegExp    = val => val instanceof RegExp;
+const isFloat     = val => typeof val === 'number' && !Number.isInteger(val);
+const isInteger   = val => Number.isInteger(val);
+const isString    = val => typeof val === 'string';
+const isBoolean   = val => typeof val === 'boolean';
+const isNull      = val => val === null;
+const isDescriber = val => isObject(val) && isObject(val._schema);
 
 module.exports = {
     /**
@@ -60,7 +60,7 @@ module.exports = {
         }
         // treat object as object describer
         else if(isObject(sugar)) {
-            return new ObjectDescriber().properties(sugar).required(...Object.keys(sugar));
+            return new ObjectDescriber().properties(sugar).requiredAll();
         }
         // treat regexp as string describer
         else if(isRegExp(sugar)) {

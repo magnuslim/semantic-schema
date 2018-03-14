@@ -1,11 +1,11 @@
-const assert = require('power-assert');
+const assert = require('assert');
 const SemanticSchema = require('../../index');
 const {object, string, integer} = SemanticSchema.describer;
 const Validator = SemanticSchema.validator;
 
 describe('object', function() {
 
-    it('plain describer', function() {
+    it('object()', function() {
         let schema = object();
         let validator = Validator.from(schema);
         assert(validator.validate({})        === true);
@@ -37,28 +37,8 @@ describe('object', function() {
         assert(validator.validate({}) === false);
         assert(validator.validate({bar: 'bar'}) === false);
     });
-
-    it('.properties().required()', function() {
-        let schema = object().properties({
-            foo: string(),
-            bar: integer()
-        }).required('foo');
-        let validator = Validator.from(schema);
-        assert(validator.validate({foo: 'foo'})                     === true);
-        assert(validator.validate({foo: 'foo', bar: 123})           === true);
-        assert(validator.validate({bar: 'bar'})                     === false);
-        assert(validator.validate({foo: 'foo', bar: 123, tar: 123}) === false);
-        assert(validator.validate({foo: 'foo', bar: 'bar'})         === false);
-    });
-
-    it('.requiredAll() make no sense with no property declared', function() {
-        let schema = object().requiredAll();
-        let validator = Validator.from(schema);
-        assert(validator.validate({})           === true);
-        assert(validator.validate({foo: 'foo'}) === true);
-    });
     
-    it('.properties().requiredAll()', function() {
+    it('.requiredAll()', function() {
         let schema = object().properties({
             foo: string(),
             bar: integer()
@@ -98,13 +78,16 @@ describe('object', function() {
     });
 
     it('.additionalProperties()', function() {
-        let schema = object().additionalProperties();
+        let schema = object().properties({
+            foo: string(),
+            bar: string()
+        }).additionalProperties();
         let validator = Validator.from(schema);
-        assert(validator.validate({})                               === true);
-        assert(validator.validate({foo: 'foo'})                     === true);
+        assert(validator.validate({foo: 'foo', bar: 'bar', tar: 123}) === true);
+        assert(validator.validate({foo: 'foo', bar: 'bar'})           === true);
     });
 
-    describe('condition (.if)', function() {
+    describe('if statement', function() {
         it('.if.properties().then.properties()', function() {
             let schema = object()
                 .if.properties({type: string().enum('student')}) // equivalent : .if.properties({type: 'student'})

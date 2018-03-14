@@ -1,10 +1,10 @@
-const assert = require('power-assert');
+const assert = require('assert');
 const SemanticSchema = require('../../index');
 const {number} = SemanticSchema.describer;
 const Validator = SemanticSchema.validator;
 
 describe('number', function() {
-    it('plain describer', function() {
+    it('number()', function() {
         let schema = number();
         let validator = Validator.from(schema);
         assert(validator.validate(0)         === true);

@@ -5,4 +5,6 @@ describe('describer', function () {
     require('./integer');
     require('./string');
     require('./object');
+    require('./array');
+    require('./invalid');
 });

@@ -1,10 +1,10 @@
-const assert = require('power-assert');
+const assert = require('assert');
 const SemanticSchema = require('../../index');
 const {string} = SemanticSchema.describer;
 const Validator = SemanticSchema.validator;
 
 describe('string', function() {
-    it('plain describer', function() {
+    it('string()', function() {
         let schema = string();
         let validator = Validator.from(schema);
         assert(validator.validate('')        === true);
@@ -16,6 +16,13 @@ describe('string', function() {
         assert(validator.validate(undefined) === false);
         assert(validator.validate({})        === false);
         assert(validator.validate([])        === false);
+    });
+    it('.pattern()', function() {
+        let schema = string().pattern(/^foo|bar$/);
+        let validator = Validator.from(schema);
+        assert(validator.validate('foo') === true);
+        assert(validator.validate('bar') === true);
+        assert(validator.validate('oof') === false);
     });
     it('.enum()', function() {
         let schema = string().enum('foo', 'bar');

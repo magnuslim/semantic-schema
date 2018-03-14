@@ -1,13 +1,13 @@
 const assert = require('assert');
 const SemanticSchema = require('../../index');
-const {NULL, empty} = SemanticSchema.describer;
+const {invalid} = SemanticSchema.describer;
 const Validator = SemanticSchema.validator;
 
-describe('null', function() {
-    it('NULL() or empty()', function() {
-        let schema = NULL();
+describe('invalid', function() {
+    it('invalid()', function() {
+        let schema = invalid();
         let validator = Validator.from(schema);
-        assert(validator.validate(null)      === true);
+        assert(validator.validate(null)      === false);
         assert(validator.validate(undefined) === false);
         assert(validator.validate(false)     === false);
         assert(validator.validate(0)         === false);

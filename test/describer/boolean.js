@@ -1,10 +1,10 @@
-const assert = require('power-assert');
+const assert = require('assert');
 const SemanticSchema = require('../../index');
 const {boolean} = SemanticSchema.describer;
 const Validator = SemanticSchema.validator;
 
 describe('boolean', function() {
-    it('plain describer', function() {
+    it('boolean()', function() {
         let schema = boolean();
         let validator = Validator.from(schema);
         assert(validator.validate(true)      === true);
@@ -20,12 +20,6 @@ describe('boolean', function() {
         let schema = boolean().enum(true);
         let validator = Validator.from(schema);
         assert(validator.validate(true)  === true);
-        assert(validator.validate(false) === false);
-    });
-    it('.invalid()', function() {
-        let schema = boolean().invalid();
-        let validator = Validator.from(schema);
-        assert(validator.validate(true)  === false);
         assert(validator.validate(false) === false);
     });
 });

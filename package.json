@@ -4,7 +4,7 @@
   "description": "write json schema in a graceful way.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/.bin/_mocha --require intelli-espower-loader ./test/test.js"
   },
   "author": "Magnus Lin",
   "license": "ISC",
@@ -18,6 +18,8 @@
   },
   "devDependencies": {
     "ajv-cli": "^3.0.0",
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^5.0.4",
     "power-assert": "^1.4.4"
   },
   "repository": {

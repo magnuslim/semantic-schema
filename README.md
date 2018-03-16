@@ -2,14 +2,14 @@
 
 > Write JSON Schema In a Graceful Way.
 
-JSON Schema is an excellent tool for validating the structure of JSON data. However, it is also veeeeeerbose. So here comes the Semantic-schema. It let you semantically write JSON Schema so you can get rid of the verbose grammar.
+JSON Schema is an excellent tool for validating the structure of JSON data. However, it is also veeeeeerbose. So here comes the `semantic-schema`. It let you semantically write JSON Schema so you can get rid of the verbose grammar.
 
 This project attempt to achieve three goals:
 1. Use JSON Schema as an underlying data structure describer;
 2. Get rid of the verbose grammar of JSON Schema;
 3. Block some confusing feature of JSON Schema.
 
-OK, let's begin with a compare between semantic-schema and plain JSON Schema. If I want a data to be an object, and has 'name', 'age' and 'gender' as its properties. And there is also some limit on these properties.
+OK, let's begin with a compare between `semantic-schema` and plain JSON Schema. If I want a data to be an object, and has 'name', 'age' and 'gender' as its properties. And there is also some limit on these properties.
 Let's declare it in JSON Schema:
 ```js
 let schema = {

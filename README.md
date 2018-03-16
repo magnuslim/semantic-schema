@@ -45,11 +45,9 @@ let schema = {
 
 Hmmm.... I prefer the second one :)
 
-# Concepts
+So let talk about the semantic-schema. There are three critical concepts in Semantic Schema: `schema`, `sugar` and `validator`:
 
-There are three critical concepts in Semantic Schema: `schema`, `sugar` and `validator`:
-
-## schema
+# schema
 
 A `schema` is a describer describing what a data should be. It is a wrapper of JSON Schema providing a semantic way to declare it. Most of the time we don't directly use JSON Schema. But a method `.normalize()` is provided to convert `schema` to a JSON Schema object. 
 There are four types of `schema`: 
@@ -78,7 +76,7 @@ let schema = object().properties({
 schema.normalize(); // convert it to a JSON Schema object.
 ```
 
-## Validator
+# Validator
 
 A `validator` will compile a `schema` inside itself and provides a `.validate()` method for you to check your target data.
 
@@ -98,7 +96,7 @@ validator.validate({foo: 1}); // false
 validator.errorsText(); // error details for the last validation.
 ```
 
-## Sugar
+# Sugar
 
 A `sugar` is just a way to simplify your declaration of `schema`. Your code will still work well without it. But it makes your code more clear.
 

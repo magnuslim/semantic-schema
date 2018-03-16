@@ -33,7 +33,7 @@ let schema = {
     required: ['name', 'age', 'gender']
 }
 ```
-In semantic-schema, we declare it like this: 
+In `semantic-schema`, we declare it like this: 
 ```js
 const {integer} = require('semantic-schema').schema;
 let schema = {
@@ -45,7 +45,7 @@ let schema = {
 
 Hmmm.... I prefer the second one :)
 
-So let talk about the semantic-schema. There are three critical concepts in Semantic Schema: `schema`, `sugar` and `validator`:
+So let talk about the `semantic-schema`. There are three critical concepts: `schema`, `sugar` and `validator`:
 
 # schema
 

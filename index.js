@@ -47,8 +47,4 @@ const schema = {
 module.exports = {
     schema,
     validator: require('./src/validator'),
-    /**
-     * @deprecated since version 0.2.0. please use .schema instead.
-     */
-    describer: schema,
 }

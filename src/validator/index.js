@@ -1,4 +1,5 @@
 const Ajv = require('ajv');
+
 const ajv = new Ajv();
 require('ajv-keywords')(ajv, 'switch');
 
@@ -7,7 +8,7 @@ module.exports = class Validator {
         this._schema = require('../sugar').resolve(schema).normalize();
         this._validate = ajv.compile(this._schema);
     }
-    
+
     static from(schema) {
         return new Validator(schema);
     }
@@ -15,14 +16,16 @@ module.exports = class Validator {
     validate(instance) {
         return this._validate(instance);
     }
-    
+
     errors() {
         return this._validate.errors;
     }
+
     errorsText(errors) {
         return errors ? ajv.errorsText(errors) : ajv.errorsText(this.errors());
     }
+
     get jsonSchema() {
         return this._schema;
     }
-}
+};

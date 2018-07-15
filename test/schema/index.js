@@ -1,4 +1,4 @@
-describe('schema', function () {
+describe('schema', () => {
     require('./boolean');
     require('./null');
     require('./number');

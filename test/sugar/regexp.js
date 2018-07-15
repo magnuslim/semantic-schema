@@ -1,12 +1,12 @@
-const Validator = require('../../index').validator;
 const assert = require('assert');
+const Validator = require('../../index').validator;
 
-describe('RegExp', function() {
-    it('data should match the regular expression.', function() {
-        let schema = /^foo|bar$/;
-        let validator = Validator.from(schema);
+describe('RegExp', () => {
+    it('data should match the regular expression.', () => {
+        const schema = /^foo|bar$/;
+        const validator = Validator.from(schema);
         assert(validator.validate('foo') === true);
         assert(validator.validate('bar') === true);
-        assert(validator.validate('hi')  === false);
+        assert(validator.validate('hi') === false);
     });
 });

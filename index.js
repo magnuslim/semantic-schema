@@ -1,50 +1,49 @@
-const BaseSchema    = require('./src/schema/base');
-const ObjectSchema  = require('./src/schema/object');
-const ArraySchema   = require('./src/schema/array');
-const StringSchema  = require('./src/schema/string');
-const NumberSchema  = require('./src/schema/number');
+const BaseSchema = require('./src/schema/base');
+const ObjectSchema = require('./src/schema/object');
+const ArraySchema = require('./src/schema/array');
+const StringSchema = require('./src/schema/string');
+const NumberSchema = require('./src/schema/number');
 const IntegerSchema = require('./src/schema/integer');
 const BooleanSchema = require('./src/schema/boolean');
-const NullSchema    = require('./src/schema/null');
-const OneOfSchema   = require('./src/schema/one_of');
+const NullSchema = require('./src/schema/null');
+const OneOfSchema = require('./src/schema/one_of');
 
 const schema = {
     object: (properties) => {
-        let schema = new ObjectSchema();
-        if (properties) schema.properties(properties);
-        return schema;
-    }, 
+        const objectSchema = new ObjectSchema();
+        if (properties) objectSchema.properties(properties);
+        return objectSchema;
+    },
     array: (item) => {
-        let schema = new ArraySchema();
-        if (item) schema.item(item);
-        return schema;
-    }, 
+        const arraySchema = new ArraySchema();
+        if (item) arraySchema.item(item);
+        return arraySchema;
+    },
     string: (pattern) => {
-        let schema = new StringSchema();
-        if (pattern) schema.pattern(pattern);
-        return schema;
-    }, 
+        const stringsSchema = new StringSchema();
+        if (pattern) stringsSchema.pattern(pattern);
+        return stringsSchema;
+    },
     integer: (min, max) => {
-        let schema = new IntegerSchema();
-        if(min) schema.min(min);
-        if(max) schema.max(max);
-        return schema;
-    }, 
+        const integerSchema = new IntegerSchema();
+        if (min) integerSchema.min(min);
+        if (max) integerSchema.max(max);
+        return integerSchema;
+    },
     number: (min, max) => {
-        let schema = new NumberSchema();
-        if(min) schema.min(min);
-        if(max) schema.max(max);
-        return schema;
-    }, 
-    boolean: () => new BooleanSchema(), 
+        const numberSchema = new NumberSchema();
+        if (min) numberSchema.min(min);
+        if (max) numberSchema.max(max);
+        return numberSchema;
+    },
+    boolean: () => new BooleanSchema(),
     NULL: () => new NullSchema(),
     empty: () => new NullSchema(),
     oneOf: (...items) => new OneOfSchema(...items),
-    invalid: () => new BaseSchema().invalid()
+    invalid: () => new BaseSchema().invalid(),
 };
-
 
 module.exports = {
     schema,
     validator: require('./src/validator'),
-}
+};

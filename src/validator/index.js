@@ -1,7 +1,6 @@
 const Ajv = require('ajv');
 
 const ajv = new Ajv();
-require('ajv-keywords')(ajv, 'switch');
 
 module.exports = class Validator {
     constructor(schema) {

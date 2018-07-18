@@ -1,8 +1,8 @@
 const NumberSchema = require('../number');
 
-module.exports = class extends NumberSchema {
+module.exports = class IntegerSchema extends NumberSchema {
     constructor() {
         super();
-        this._schema.type = 'integer';
+        this._current.set('type', 'integer');
     }
 };

@@ -1,10 +1,8 @@
-const Base = require('../base');
+const BaseSchema = require('../base');
 
-module.exports = class extends Base {
+module.exports = class extends BaseSchema {
     constructor(...items) {
         super();
-        this._schema = {
-            oneOf: items.map(item => require('../../sugar').resolve(item).normalize()),
-        };
+        this._current.set('oneOf', items.map(item => require('../../sugar').resolve(item).normalize()));
     }
 };

@@ -1,13 +1,13 @@
 const BaseSchema = require('../base');
 
-module.exports = class extends BaseSchema {
+module.exports = class BooleanSchema extends BaseSchema {
     constructor() {
         super();
-        this._schema.type = 'boolean';
+        this._current.set('type', 'boolean');
     }
 
     enum(...enumArr) {
-        this._schema.enum = enumArr;
+        this._current.set('enum', enumArr);
         return this;
     }
 };

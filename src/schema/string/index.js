@@ -3,21 +3,21 @@ const Base = require('../base');
 module.exports = class extends Base {
     constructor() {
         super();
-        this._schema.type = 'string';
+        this._current.set('type', 'string');
     }
 
     enum(...enumArr) {
-        this._schema.enum = enumArr;
+        this._current.set('enum', enumArr);
         return this;
     }
 
     maxLength(len) {
-        this._schema.maxLength = len;
+        this._current.set('maxLength', len);
         return this;
     }
 
     minLength(len) {
-        this._schema.minLength = len;
+        this._current.set('minLength', len);
         return this;
     }
 
@@ -27,8 +27,8 @@ module.exports = class extends Base {
     }
 
     pattern(regex) {
-        if (regex instanceof RegExp) this._schema.pattern = regex.source;
-        else this._schema.pattern = regex;
+        if (regex instanceof RegExp) this._current.set('pattern', regex.source);
+        else this._current.set('pattern', regex);
         return this;
     }
 };

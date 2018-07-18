@@ -13,7 +13,7 @@ const isInteger = val => Number.isInteger(val);
 const isString = val => typeof val === 'string';
 const isBoolean = val => typeof val === 'boolean';
 const isNull = val => val === null;
-const isSchema = val => isObject(val) && isObject(val._schema);
+const isSchema = val => isObject(val) && isObject(val._current) && isObject(val._tree);
 
 module.exports = {
 
@@ -55,7 +55,7 @@ module.exports = {
         }
         // treat object as object schema
         else if (isObject(sugar)) {
-            return new ObjectSchema().properties(sugar).requiredAll();
+            return new ObjectSchema().properties(sugar).require(...Object.keys(sugar));
         }
         // treat regexp as string schema
         else if (isRegExp(sugar)) {

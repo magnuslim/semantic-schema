@@ -26,29 +26,15 @@ describe('object', () => {
         const validator = Validator.from(schema);
         assert(validator.validate({ foo: 'foo' }) === true);
         assert(validator.validate({ foo: 'foo', bar: 123 }) === true);
-        assert(validator.validate({ foo: 'foo', bar: 123, tar: 123 }) === false);
         assert(validator.validate({ foo: 'foo', bar: 'bar' }) === false);
     });
 
-    it('.required()', () => {
-        const schema = object().required('foo');
+    it('.require()', () => {
+        const schema = object().require('foo');
         const validator = Validator.from(schema);
         assert(validator.validate({ foo: 'foo' }) === true);
         assert(validator.validate({}) === false);
         assert(validator.validate({ bar: 'bar' }) === false);
-    });
-
-    it('.requiredAll()', () => {
-        const schema = object().properties({
-            foo: string(),
-            bar: integer(),
-        }).requiredAll();
-        const validator = Validator.from(schema);
-        assert(validator.validate({ foo: 'foo', bar: 123 }) === true);
-        assert(validator.validate({ foo: 'foo' }) === false);
-        assert(validator.validate({ bar: 'bar' }) === false);
-        assert(validator.validate({ foo: 'foo', bar: 123, tar: 123 }) === false);
-        assert(validator.validate({ foo: 'foo', bar: 'bar' }) === false);
     });
 
     it('.patternProperties()', () => {
@@ -61,13 +47,13 @@ describe('object', () => {
         assert(validator.validate({ foo: 'foo' }) === true);
         assert(validator.validate({ bar: 'bar' }) === true);
         assert(validator.validate({ foo: 'foo', bar: 123 }) === false);
-        assert(validator.validate({ foo: 'foo', bar: 'bar', tar: 1 }) === false);
+        assert(validator.validate({ foo: 'foo', bar: 'bar', tar: 1 }) === true);
     });
 
-    it('.patternProperties()', () => {
+    it('.patternProperties().additionalProperties()', () => {
         const schema = object().patternProperties({
             '^foo|bar$': string(),
-        });
+        }).additionalProperties(false);
         const validator = Validator.from(schema);
         assert(validator.validate({}) === true);
         assert(validator.validate({ foo: 'foo', bar: 'bar' }) === true);
@@ -94,12 +80,12 @@ describe('object', () => {
                 .then.properties({
                     type: string().enum('student'),
                     grade: integer(),
-                }).requiredAll()
+                }).require('type', 'grade').additionalProperties(false)
                 .elseIf.properties({ type: string().enum('staff') })
                 .then.properties({
                     type: string().enum('staff'),
                     salary: integer(),
-                }).requiredAll()
+                }).require('type', 'salary').additionalProperties(false)
                 .else.invalid()
                 .endIf;
             const validator = Validator.from(schema);
@@ -110,13 +96,18 @@ describe('object', () => {
             assert(validator.validate({ type: 'housewife', salary: 12000 }) === false);
         });
 
-        it('.if.properties().then.required()', () => {
+        it('.if.properties().then.require()', () => {
             const schema = object().properties({
                 type: string().enum('student', 'staff'),
                 grade: integer(),
                 salary: integer(),
-            }).if.properties({ type: 'student' }).then.required('type', 'grade')
-                .elseIf.properties({ type: 'staff' }).then.required('type', 'salary').else.invalid().endIf;
+            }).additionalProperties(false)
+                .if.properties({ type: 'student' })
+                .then.require('type', 'grade')
+                .elseIf.properties({ type: 'staff' })
+                .then.require('type', 'salary')
+                .else.invalid()
+                .endIf;
             const validator = Validator.from(schema);
             assert(validator.validate({ type: 'student', grade: 12 }) === true);
             assert(validator.validate({ type: 'staff', salary: 12000 }) === true);

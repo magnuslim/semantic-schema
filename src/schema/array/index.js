@@ -1,19 +1,19 @@
 const BaseSchema = require('../base');
 
-module.exports = class extends BaseSchema {
+module.exports = class ArraySchema extends BaseSchema {
     constructor() {
         super();
-        this._schema.type = 'array';
-        this._schema.additionalItems = false;
+        this._current.set('type', 'array');
+        this._current.set('additionalItems', false);
     }
 
     maxItems(num) {
-        this._schema.maxItems = num;
+        this._current.set('maxItems', num);
         return this;
     }
 
     minItems(num) {
-        this._schema.minItems = num;
+        this._current.set('minItems', num);
         return this;
     }
 
@@ -23,19 +23,27 @@ module.exports = class extends BaseSchema {
     }
 
     uniqueItems() {
-        this._schema.uniqueItems = true;
+        this._current.set('uniqueItems', true);
         return this;
     }
 
+    /**
+     * Specify a schema for all items in the target array.
+     * @param {*} schemaOrSugar
+     */
     item(schemaOrSugar) {
         const schema = require('../../sugar').resolve(schemaOrSugar);
-        this._schema.items = schema.normalize();
+        this._current.set('items', schema.normalize());
         return this;
     }
 
+    /**
+     * The target array should contains at least one item that match the specified schema.
+     * @param {*} schemaOrSugar
+     */
     contains(schemaOrSugar) {
         const schema = require('../../sugar').resolve(schemaOrSugar);
-        this._schema.contains = schema.normalize();
+        this._current.set('contains', schema.normalize());
         return this;
     }
 };

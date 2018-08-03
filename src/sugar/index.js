@@ -5,7 +5,8 @@ const IntegerSchema = require('../schema/integer');
 const BooleanSchema = require('../schema/boolean');
 const NullSchema = require('../schema/null');
 
-const isObject = val => require('isobject')(val) && !(val instanceof RegExp);
+const isRef = val => val && val.$ref;
+const isObject = val => require('isobject')(val) && !(val instanceof RegExp) && !isRef(val);
 const isArray = val => Array.isArray(val);
 const isRegExp = val => val instanceof RegExp;
 const isFloat = val => typeof val === 'number' && !Number.isInteger(val);
@@ -25,7 +26,7 @@ module.exports = {
         if (isArray(sugar)) {
             const sugarSet = [...new Set(sugar)];
             if (sugarSet.length === 0) {
-                throw new Error(`unrecognized definition: ${sugarSet}`);
+                throw new Error(`unrecognized definition: ${JSON.stringify(sugarSet)}`);
             }
             else if (sugarSet.every(isInteger)) {
                 return new IntegerSchema().enum(...sugarSet);
@@ -47,10 +48,10 @@ module.exports = {
                     return new BooleanSchema();
                 }
 
-                throw new Error(`unrecognized definition: ${sugarSet}`);
+                throw new Error(`unrecognized definition: ${JSON.stringify(sugarSet)}`);
             }
             else {
-                throw new Error(`unrecognized definition: ${sugarSet}`);
+                throw new Error(`unrecognized definition: ${JSON.stringify(sugarSet)}`);
             }
         }
         // treat object as object schema

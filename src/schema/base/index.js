@@ -35,6 +35,22 @@ module.exports = class {
         return this;
     }
 
+    nullable() {
+        const type = this._current.get('type');
+        if (typeof type === 'string') {
+            this._current.set('type', [type, 'null']);
+        }
+        else if (Array.isArray(type)) {
+            if (type.includes('null')) {
+                throw new Error('cannot set nullable twice');
+            }
+            type.push('null');
+            this._current.set('type', type);
+        }
+        this._current.set('nullable', true);
+        return this;
+    }
+
     custom(key, value) {
         assert(typeof key === 'string', 'expect a string key for .custom()');
         this._current.set(key, value);

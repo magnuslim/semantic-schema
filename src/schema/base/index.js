@@ -1,3 +1,4 @@
+const assert = require('assert');
 const Node = require('./node');
 
 const keyword = {
@@ -26,6 +27,17 @@ module.exports = class {
 
     desc(desc) {
         this._current.set(keyword.DESCRIPTION, desc);
+        return this;
+    }
+
+    example(value) {
+        this._current.set('example', value);
+        return this;
+    }
+
+    custom(key, value) {
+        assert(typeof key === 'string', 'expect a string key for .custom()');
+        this._current.set(key, value);
         return this;
     }
 

@@ -6,6 +6,11 @@ module.exports = class extends Base {
         this._current.set('type', 'string');
     }
 
+    format(format) {
+        this._current.set('format', format);
+        return this;
+    }
+
     enum(...enumArr) {
         this._current.set('enum', enumArr);
         return this;

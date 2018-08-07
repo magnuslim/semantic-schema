@@ -7,6 +7,8 @@ const IntegerSchema = require('./src/schema/integer');
 const BooleanSchema = require('./src/schema/boolean');
 const NullSchema = require('./src/schema/null');
 const OneOfSchema = require('./src/schema/one_of');
+const AllOfSchema = require('./src/schema/all_of');
+const AnyOfSchema = require('./src/schema/any_of');
 const RefSchema = require('./src/schema/ref');
 
 const schema = {
@@ -41,6 +43,8 @@ const schema = {
     NULL: () => new NullSchema(),
     empty: () => new NullSchema(),
     oneOf: (...items) => new OneOfSchema(...items),
+    anyOf: (...items) => new AnyOfSchema(...items),
+    allOf: (...items) => new AllOfSchema(...items),
     ref: path => new RefSchema(path),
     invalid: () => new BaseSchema().invalid(),
 };

@@ -36,6 +36,16 @@ module.exports = class ObjectSchema extends BaseSchema {
         return this;
     }
 
+    minProperties(num) {
+        this._current.set('minProperties', num);
+        return this;
+    }
+
+    maxProperties(num) {
+        this._current.set('maxProperties', num);
+        return this;
+    }
+
     additionalProperties(isAllow) {
         this._current.set('additionalProperties', isAllow);
         return this;

@@ -45,7 +45,7 @@ const schema = {
     oneOf: (...items) => new OneOfSchema(...items),
     anyOf: (...items) => new AnyOfSchema(...items),
     allOf: (...items) => new AllOfSchema(...items),
-    ref: path => new RefSchema(path),
+    $ref: path => new RefSchema(path),
     invalid: () => new BaseSchema().invalid(),
 };
 

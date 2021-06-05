@@ -25,6 +25,16 @@ module.exports = class {
         return this;
     }
 
+    author(author) {
+        this._current.set('author', author);
+        return this;
+    }
+
+    title(title) {
+        this._current.set('title', title);
+        return this;
+    }
+
     desc(desc) {
         this._current.set(keyword.DESCRIPTION, desc);
         return this;
@@ -54,6 +64,11 @@ module.exports = class {
     custom(key, value) {
         assert(typeof key === 'string', 'expect a string key for .custom()');
         this._current.set(key, value);
+        return this;
+    }
+
+    $id(id) {
+        this._current.set('$id', id);
         return this;
     }
 

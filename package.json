@@ -24,7 +24,7 @@
     "eslint-plugin-jest": "^21.17.0",
     "husky": "^1.0.0-rc.13",
     "intelli-espower-loader": "^1.0.1",
-    "jest": "^23.4.1"
+    "jest": "^29.3.1"
   },
   "husky": {
     "hooks": {
